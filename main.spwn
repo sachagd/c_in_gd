@@ -1,0 +1,110 @@
+extract obj_props
+extract $
+
+count_trailing_ones = (ones, count, i) {
+    if (i >= count || ones[i] != i){
+        return i
+    }
+    return count_trailing_ones(ones, count, i + 1)
+}
+
+binary_count = (ones, count) {
+    let t = count_trailing_ones(ones, count, 0)
+    let flips = t
+    let new_ones = [t]
+    for i in t..count {
+        new_ones.push( ones[i] )
+    }
+    return { ones: new_ones, count: new_ones.length, flips: flips }
+}
+
+let ones = [] 
+let count = 0
+
+code = readfile("encoded_trace.json", "json")
+
+for i in 0..1000 {
+    let res = binary_count(ones, count)
+    ones = res.ones
+    count = res.count
+    flips = res.flips
+    add(obj{
+        OBJ_ID: 1817,
+        X: 3105 + 30 * i,
+        Y: 105,
+        COUNT: code[i],
+        ITEM: 11i,
+        SPAWN_TRIGGERED: true,
+        MULTI_TRIGGER: true,
+        GROUPS:[(30 + ones[j]) as @group for j in 0..count] + [29g],
+        EDITOR_LAYER_1: 3,
+    })
+    for j in 0..flips{
+        add(obj{
+            OBJ_ID: 1811,
+            X: 3105 + 30 * i,
+            Y: 135 + 30 * j,
+            COUNT: i + 1,
+            ITEM: 5i,
+            TARGET: (30 + j) as @group,
+            SPAWN_TRIGGERED: true,
+            MULTI_TRIGGER: true,
+            GROUPS: 40g,
+        })
+    }
+    add(obj{
+        OBJ_ID: 1811,
+        X: 3105 + 30 * i,
+        Y: 135 + 30 * flips,
+        COUNT: i + 1,
+        ITEM: 5i,
+        TARGET: (30 + flips) as @group,
+        SPAWN_TRIGGERED: true,
+        MULTI_TRIGGER: true,
+        ACTIVATE_GROUP: true,
+        GROUPS: 40g,
+    })
+}
+
+for i in 1..ones[-1] + 1{
+    add(obj{
+        OBJ_ID: 1811,
+        X: 3105,
+        Y: 135 + 30 * i,
+        COUNT: 1,
+        ITEM: 5i,
+        TARGET: (30 + i) as @group,
+        SPAWN_TRIGGERED: true,
+        MULTI_TRIGGER: true,
+        GROUPS: 40g,
+    })
+}
+
+add(obj{
+    OBJ_ID: 1811,
+    X: 3105 + 30 * 1005,
+    Y: 135,
+    COUNT: 0,
+    ITEM: 9999i,
+    TARGET: 29g,
+    SPAWN_TRIGGERED: true,
+    MULTI_TRIGGER: true,
+    ACTIVATE_GROUP: true,
+    GROUPS: 40g,
+})
+
+instructions = readfile("unique_instructions.json", "json")
+
+for i in 0..instructions.length{
+    add(obj{
+        OBJ_ID: 1811,
+        X: 3105 + 30 * 1010 + 30 * i,
+        Y: 135,
+        COUNT: i,
+        ITEM: 11i,
+        SPAWN_TRIGGERED: true,
+        MULTI_TRIGGER: true,
+        ACTIVATE_GROUP: true,
+        GROUPS: 40g,
+    })
+}
