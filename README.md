@@ -12,7 +12,7 @@ To use the project, first build it using : dune build
 
 Then, write some code in main.c and compile it using the following command : 
 
-gcc -fno-stack-protector -fno-asynchronous-unwind-tables -fomit-frame-pointer -fcf-protection=none -m32 -S main.c
+gcc -fno-stack-protector -fno-asynchronous-unwind-tables -fomit-frame-pointer -fcf-protection=none -m32 -S code.c
 
 Then use this command : dune exec bin/main.exe
 
