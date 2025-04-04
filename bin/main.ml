@@ -289,7 +289,7 @@ let write_json filename json =
   close_out oc
 
 let () =
-  let filename = "main.s" in
+  let filename = "code.s" in
   let channel = open_in filename in
   let lexbuf = Lexing.from_channel channel in
   let ast = Parser.program Lexer.token lexbuf in
