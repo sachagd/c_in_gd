@@ -1,5 +1,4 @@
 (executable
  (name main)
  (modules main)
- (flags (:standard -w))
  (libraries ast lexer parser menhirLib yojson))

@@ -267,7 +267,7 @@ let programf (Program(functions)) =
 
 let encode_trace trace =
   let mapping = Hashtbl.create 100 in
-  let next_code = ref 0 in
+  let next_code = ref 1 in
   let encoded_trace = List.map (fun instr ->
       if Hashtbl.mem mapping instr then
         Hashtbl.find mapping instr
@@ -277,9 +277,9 @@ let encode_trace trace =
         next_code := !next_code + 1;
         code
     ) trace in
-  let unique_instructions = Array.make !next_code ("", 0, 0) in
+  let unique_instructions = Array.make (!next_code - 1) ("", 0, 0) in
   Hashtbl.iter (fun instr code ->
-    unique_instructions.(code) <- instr
+    unique_instructions.(code - 1) <- instr
   ) mapping;
   (encoded_trace, unique_instructions)
 
@@ -289,7 +289,7 @@ let write_json filename json =
   close_out oc
 
 let () =
-  let filename = "main.s" in
+  let filename = "code.s" in
   let channel = open_in filename in
   let lexbuf = Lexing.from_channel channel in
   let ast = Parser.program Lexer.token lexbuf in
