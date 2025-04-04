@@ -267,7 +267,7 @@ let programf (Program(functions)) =
 
 let encode_trace trace =
   let mapping = Hashtbl.create 100 in
-  let next_code = ref 0 in
+  let next_code = ref 1 in
   let encoded_trace = List.map (fun instr ->
       if Hashtbl.mem mapping instr then
         Hashtbl.find mapping instr
