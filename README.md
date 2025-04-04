@@ -1,7 +1,8 @@
 Dependencies :
-  - ocamllex and menhir
+  - ocaml
+  - menhir (opam install menhir)
   - yojson (opam install yojson)
-  - dune
+  - dune (opam install dune)
   - gcc
   - spwn
 
