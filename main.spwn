@@ -17,38 +17,51 @@ instructions = readfile("unique_instructions.json", "json")
 
 let group = 1
 
+//incomplete because spwn can't use some 2.2 features
+
 for i in 0..instructions.length{
-    add(obj{
-        OBJ_ID: 1811,
-        X: 3105 + 30 * 1010 + 30 * i,
-        Y: 135,
-        COUNT: i,
-        ITEM: 11i,
-        TARGET: group as @group,
-        SPAWN_TRIGGERED: true,
-        MULTI_TRIGGER: true,
-        ACTIVATE_GROUP: true,
-        GROUPS: 40g,
-    })
-    if(instructions[i] == "subl"){
+    if(instructions[i][0] == "subl"){
+        add(obj{
+            OBJ_ID: 3619,
+            X: 105 + 30 * i,
+            Y: 990,
+            ITEM: instructions[i][1] as @item,
+            TARGET: instructions[i][2],
+            SPAWN_TRIGGERED: true,
+            MULTI_TRIGGER: true,
+            GROUPS: group as @group,
+        })
+        group += 1
+    }
+    else if(instructions[i][0] == "movl"){
+        add(obj{
+            OBJ_ID: 3619,
+            X: 105 + 30 * i,
+            Y: 990,
+            ITEM: instructions[i][1] as @item,
+            TARGET: instructions[i][2],
+            SPAWN_TRIGGERED: true,
+            MULTI_TRIGGER: true,
+            GROUPS: group as @group,
+        })
+        group += 1
+    }
+    else if(instructions[i][0] == "addl"){
 
     }
-    else if(instructions[i] == "movl"){
+    else if(instructions[i][0] == "cmpb"){
 
     }
-    else if(instructions[i] == "addl"){
+    else if(instructions[i][0] == "idivl"){
 
     }
-    else if(instructions[i] == "cmpb"){
+    else if(instructions[i][0] == "testl"){
+        for j in 0..32{
 
+        }
+        group += 4
     }
-    else if(instructions[i] == "idivl"){
-
-    }
-    else if(instructions[i] == "testl"){
-
-    }
-    else if(instructions[i] == "stop"){
+    else if(instructions[i][0] == "stop"){
 
     }
 }
