@@ -15,23 +15,22 @@ add(obj{
 
 instructions = readfile("unique_instructions.json", "json")
 
-let group = 1
+let group = instructions.length
 
 //incomplete because spwn can't use some 2.2 features
 
-for i in 0..instructions.length{
+for i in 0..group{
     if(instructions[i][0] == "subl"){
         add(obj{
             OBJ_ID: 3619,
             X: 105 + 30 * i,
             Y: 990,
             ITEM: instructions[i][1] as @item,
-            TARGET: instructions[i][2],
+            TARGET: instructions[i][3],
             SPAWN_TRIGGERED: true,
             MULTI_TRIGGER: true,
-            GROUPS: group as @group,
+            GROUPS: i as @group,
         })
-        group += 1
     }
     else if(instructions[i][0] == "movl"){
         add(obj{
@@ -39,29 +38,19 @@ for i in 0..instructions.length{
             X: 105 + 30 * i,
             Y: 990,
             ITEM: instructions[i][1] as @item,
-            TARGET: instructions[i][2],
+            TARGET: 9506,
             SPAWN_TRIGGERED: true,
             MULTI_TRIGGER: true,
-            GROUPS: group as @group,
+            GROUPS: i as @group,
         })
-        group += 1
     }
     else if(instructions[i][0] == "addl"){
-
-    }
-    else if(instructions[i][0] == "cmpb"){
 
     }
     else if(instructions[i][0] == "idivl"){
 
     }
-    else if(instructions[i][0] == "testl"){
-        for j in 0..32{
-
-        }
-        group += 4
-    }
     else if(instructions[i][0] == "stop"){
-
+        //end trigger, advanced follow trigger, end trigger
     }
 }

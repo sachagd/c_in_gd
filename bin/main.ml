@@ -89,15 +89,15 @@ let argregister reg =
 
 let argargument cpu arg = 
   match arg with
-  |Reg1(reg) -> argregister reg
-  |Reg2(reg) -> get_register cpu reg
-  |Reg3(offset, reg) -> offset + get_register cpu reg
-  |Reg4(offset, base, index, scale) -> offset + (get_register cpu index) * scale + (get_register cpu base)
+  |Reg1(reg) -> argregister reg, "reg"
+  |Reg2(reg) -> get_register cpu reg, "reg"
+  |Reg3(offset, reg) -> offset + get_register cpu reg, "reg"
+  |Reg4(offset, base, index, scale) -> offset + (get_register cpu index) * scale + (get_register cpu base), "reg"
   |Imm(s) -> 
     if s = "$_GLOBAL_OFFSET_TABLE_" then 
-      0
+      0, "imm"
     else 
-      int_of_string (String.sub s 1 (String.length s - 1))
+      int_of_string (String.sub s 1 (String.length s - 1)), "imm"
   |_ -> failwith "invalid argument"
 
 let execute code label_references main_ret_index = 
@@ -126,7 +126,6 @@ let execute code label_references main_ret_index =
       cpu.pc <- cpu.pc + 1
 
     |Cmpb(src, dst) |Cmpl(src, dst) ->
-      r := ("cmpb", argargument cpu src, argargument cpu dst) :: !r;
       let src_val = get_argument cpu src in
       let dst_val = get_argument cpu dst in
       let result = dst_val - src_val in
@@ -135,7 +134,6 @@ let execute code label_references main_ret_index =
       cpu.pc <- cpu.pc + 1
 
     |Testl(op1, op2) ->
-      r := ("testl", argargument cpu op1, argargument cpu op2) :: !r;
       let result = (get_argument cpu op1) land (get_argument cpu op2) in
       update_flags cpu result;
       cpu.flags.overflow <- false;
@@ -166,7 +164,7 @@ let execute code label_references main_ret_index =
       if divisor = 0 then 
         failwith "Division by zero" 
       else
-        r := ("idivl", argargument cpu op, 0) :: !r;
+        r := ("idivl", argargument cpu op, (0,"")) :: !r;
         let quotient = cpu.regs.eax / divisor in
         let remainder = cpu.regs.eax mod divisor in
         cpu.regs.eax <- quotient;
@@ -216,7 +214,7 @@ let execute code label_references main_ret_index =
 
     |_ -> failwith "impossible"
   done;
-  r := ("stop", 0, 0) :: !r;
+  r := ("stop", (0,""), (0,"")) :: !r;
   List.rev !r
 
 let rec mlabelsf labels label_references program_counter code main_ret_index =
@@ -277,7 +275,7 @@ let encode_trace trace =
         next_code := !next_code + 1;
         code
     ) trace in
-  let unique_instructions = Array.make (!next_code - 1) ("", 0, 0) in
+  let unique_instructions = Array.make (!next_code - 1) ("", (0,""), (0,"")) in
   Hashtbl.iter (fun instr code ->
     unique_instructions.(code - 1) <- instr
   ) mapping;
@@ -302,8 +300,8 @@ let () =
   in
   let json_unique_instructions =
     `List (
-      Array.to_list unique_instructions |> List.map (fun (name, arg1, arg2) ->
-        `List [ `String name; `Int arg1; `Int arg2 ]
+      Array.to_list unique_instructions |> List.map (fun (name, (arg1, typ1), (arg2, typ2)) ->
+        `List [ `String name; `Int arg1; `String typ1; `Int arg2; `String typ2 ]
       )
     )
   in

@@ -5,11 +5,9 @@ int main(){
     int t[30];
     int i = 0;
     int k = 2;
-    int l = 0;
     while(i < 30){
         bool c = true;
         for (int j = 0; j < i; j++){
-            l++;
             if (k%t[j] == 0){
                 c = false;
             }
@@ -20,6 +18,5 @@ int main(){
         }
         k++;
     }
-    printf("%i", l);
     return 0;
 }
