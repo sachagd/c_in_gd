@@ -4,7 +4,7 @@ Dependencies :
   - yojson (opam install yojson)
   - dune (opam install dune)
   - gcc
-  - spwn
+  - G.js (nodejs)
 
 This project is still in development !
 
