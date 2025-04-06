@@ -33,12 +33,12 @@ $.exportConfig({
         MULTI_TRIGGER: true,
         GROUPS: group(9990),
     }));
-    
+
     $.add(object({
         OBJ_ID: 3607,
         X: 225,
         Y: 75,
-        SEQUENCE: code.map(y => [group(y), 1]),
+        SEQUENCE: code.map(y => y + '.1').join('.'),
         SPAWN_TRIGGERED: true,
         MULTI_TRIGGER: true,
         GROUPS: group(9990),
@@ -59,7 +59,7 @@ $.exportConfig({
                     ITEM: instructions[i][3],
                     SPAWN_TRIGGERED: true,
                     MULTI_TRIGGER: true,
-                    GROUPS: group(i),
+                    GROUPS: group(i + 1),
                 }))
             }
             else if (instructions[i][2] == "reg"){
@@ -67,15 +67,15 @@ $.exportConfig({
                     OBJ_ID: 3619,
                     X: 105 + 30 * i,
                     Y: 135,
-                    ITEM_ID_1: instructions[i][3],
+                    ITEM_ID_1: instructions[i][1],
                     TYPE_1: 1,
-                    ITEM_TARGET: instructions[i][1],
+                    ITEM_TARGET: instructions[i][3],
                     ITEM_TARGET_TYPE: 1,
                     MOD: 1,
                     ASSIGN_OP: 3,
                     SPAWN_TRIGGERED: true,
                     MULTI_TRIGGER: true,
-                    GROUPS: group(i),
+                    GROUPS: group(i + 1),
                 }))
             }
         }
@@ -89,7 +89,7 @@ $.exportConfig({
                     ITEM: instructions[i][3],
                     SPAWN_TRIGGERED: true,
                     MULTI_TRIGGER: true,
-                    GROUPS: group(i),
+                    GROUPS: group(i + 1),
                 })) 
             }
             else if (instructions[i][2] == "reg"){
@@ -97,15 +97,15 @@ $.exportConfig({
                     OBJ_ID: 3619,
                     X: 105 + 30 * i,
                     Y: 135,
-                    ITEM_ID_1: instructions[i][3],
+                    ITEM_ID_1: instructions[i][1],
                     TYPE_1: 1,
-                    ITEM_TARGET: instructions[i][1],
+                    ITEM_TARGET: instructions[i][3],
                     ITEM_TARGET_TYPE: 1,
                     MOD: 1,
                     ASSIGN_OP: 2,
                     SPAWN_TRIGGERED: true,
                     MULTI_TRIGGER: true,
-                    GROUPS: group(i),
+                    GROUPS: group(i + 1),
                 }))
             }
         }
@@ -120,7 +120,7 @@ $.exportConfig({
                     OVERRIDE_COUNT: true,
                     SPAWN_TRIGGERED: true,
                     MULTI_TRIGGER: true,
-                    GROUPS: group(i),
+                    GROUPS: group(i + 1),
                 }))
             }
             else if (instructions[i][2] == "reg"){
@@ -128,14 +128,14 @@ $.exportConfig({
                     OBJ_ID: 3619,
                     X: 105 + 30 * i,
                     Y: 135,
-                    ITEM_ID_1: instructions[i][3],
+                    ITEM_ID_1: instructions[i][1],
                     TYPE_1: 1,
-                    ITEM_TARGET: instructions[i][1],
+                    ITEM_TARGET: instructions[i][3],
                     ITEM_TARGET_TYPE: 1,
                     MOD: 1,
                     SPAWN_TRIGGERED: true,
                     MULTI_TRIGGER: true,
-                    GROUPS: group(i),
+                    GROUPS: group(i + 1),
                 }))
             }
         }
@@ -154,7 +154,7 @@ $.exportConfig({
                 OP_1: 4,
                 SPAWN_TRIGGERED: true,
                 MULTI_TRIGGER: true,
-                GROUPS: group(i),
+                GROUPS: group(i + 1),
             }))
             $.add(object({
                 OBJ_ID: 3619,
@@ -170,7 +170,7 @@ $.exportConfig({
                 OP_1: 3,
                 SPAWN_TRIGGERED: true,
                 MULTI_TRIGGER: true,
-                GROUPS: group(i),
+                GROUPS: group(i + 1),
             }))
             $.add(object({
                 OBJ_ID: 3619,
@@ -186,7 +186,7 @@ $.exportConfig({
                 OP_1: 2,
                 SPAWN_TRIGGERED: true,
                 MULTI_TRIGGER: true,
-                GROUPS: group(i),
+                GROUPS: group(i + 1),
             }))
             $.add(object({
                 OBJ_ID: 3619,
@@ -199,7 +199,7 @@ $.exportConfig({
                 MOD: 1,            
                 SPAWN_TRIGGERED: true,
                 MULTI_TRIGGER: true,
-                GROUPS: group(i),
+                GROUPS: group(i + 1),
             }))
         }
         else if(instructions[i][0] == "stop"){
@@ -210,7 +210,7 @@ $.exportConfig({
                 TARGET: group(9990),
                 SPAWN_TRIGGERED: true,
                 MULTI_TRIGGER: true,
-                GROUPS: group(i),
+                GROUPS: group(i + 1),
             }))
             $.add(object({
                 OBJ_ID: 3600,
@@ -218,7 +218,7 @@ $.exportConfig({
                 Y: 165,
                 SPAWN_TRIGGERED: true,
                 MULTI_TRIGGER: true,
-                GROUPS: group(i),
+                GROUPS: group(i + 1),
             }))
         }
     }
