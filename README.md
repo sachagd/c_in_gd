@@ -7,6 +7,7 @@ Dependencies :
   - G.js (nodejs)
 
 This project is still in development !
+Not all c code will work as i need to implement more assembly instructions
 
 To use the project, first build it using : dune build 
 
