@@ -28,7 +28,7 @@ $.exportConfig({
         X: 165,
         Y: 75,
         TARGET: group(9990),
-        SPAWN_DURATION: 0.1,
+        SPAWN_DURATION: 0.005,
         SPAWN_TRIGGERED: true,
         MULTI_TRIGGER: true,
         GROUPS: group(9990),
