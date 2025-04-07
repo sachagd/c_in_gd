@@ -17,4 +17,4 @@ gcc -fno-stack-protector -fno-asynchronous-unwind-tables -fomit-frame-pointer -f
 
 Then use this command : dune exec bin/main.exe
 
-And finally use this command : spwn build main.spwn --allow readfile
+And finally use this command : node main.js
